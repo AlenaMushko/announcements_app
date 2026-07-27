@@ -6,7 +6,11 @@
     "start": "tsx app.ts",
     "dev": "tsx --watch app.ts",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:generate": "prisma generate"
+    "prisma:generate": "prisma generate",
+    "docker:up": "docker compose up -d postgres",
+    "docker:up:app": "docker compose up --build app",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f"
   },
   "keywords": [],
   "author": "",
