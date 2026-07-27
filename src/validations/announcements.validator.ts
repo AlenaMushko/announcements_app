@@ -35,9 +35,32 @@ export const UpdateAnnouncementSchema = registry.register(
 export const GetAnnouncementsQuerySchema = registry.register(
   'GetAnnouncementsQuery',
   z.object({
-    page: z.coerce.number().int().min(1).optional(),
-    search: z.string().max(100).optional(),
-    sort: z.enum(['newest', 'oldest']).optional(),
+    page: z.coerce
+      .number()
+      .int()
+      .min(1)
+      .optional()
+      .openapi({
+        description: 'Page number (1-based). Default: 1. Fixed page size: 10.',
+        example: 1,
+      }),
+    search: z
+      .string()
+      .max(100)
+      .optional()
+      .openapi({
+        description:
+          'Case-insensitive substring search in announcement title. Empty or omitted returns all.',
+        example: 'ноутбук',
+      }),
+    sort: z
+      .enum(['newest', 'oldest'])
+      .optional()
+      .openapi({
+        description:
+          'Sort by createdAt. newest = desc (default), oldest = asc.',
+        example: 'newest',
+      }),
   }),
 )
 

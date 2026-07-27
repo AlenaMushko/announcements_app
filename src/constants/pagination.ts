@@ -1,0 +1,1 @@
+export const ANNOUNCEMENTS_PER_PAGE = 10

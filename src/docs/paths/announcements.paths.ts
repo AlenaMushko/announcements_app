@@ -1,5 +1,6 @@
 import { ANNOUNCEMENT_OPENAPI_PATHS } from '../../constants/routes.ts'
 import { registry } from '../openapi.ts'
+import { AnnouncementsListResponseSchema, AnnouncementSchema } from '../schemas/announcements.schemas.ts'
 import {
   AnnouncementParamsSchema,
   CreateAnnouncementSchema,
@@ -14,11 +15,20 @@ registry.registerPath({
   path: ANNOUNCEMENT_OPENAPI_PATHS.ROOT,
   tags: [ANNOUNCEMENTS_TAG],
   summary: 'Get all announcements with pagination, search and sorting',
+  description:
+    'Public list endpoint. Supports pagination (10 items per page), case-insensitive title search, and sorting by newest/oldest.',
   request: {
     query: GetAnnouncementsQuerySchema,
   },
   responses: {
-    200: { description: 'List of announcements with pagination metadata' },
+    200: {
+      description: 'List of announcements with pagination metadata',
+      content: {
+        'application/json': {
+          schema: AnnouncementsListResponseSchema,
+        },
+      },
+    },
     400: { description: 'Invalid query parameters' },
   },
 })
@@ -32,7 +42,14 @@ registry.registerPath({
     params: AnnouncementParamsSchema,
   },
   responses: {
-    200: { description: 'Announcement retrieved successfully' },
+    200: {
+      description: 'Announcement retrieved successfully',
+      content: {
+        'application/json': {
+          schema: AnnouncementSchema,
+        },
+      },
+    },
     400: { description: 'Invalid parameters' },
     404: { description: 'Announcement not found' },
   },
@@ -54,7 +71,14 @@ registry.registerPath({
     },
   },
   responses: {
-    201: { description: 'Announcement created successfully' },
+    201: {
+      description: 'Announcement created successfully',
+      content: {
+        'application/json': {
+          schema: AnnouncementSchema,
+        },
+      },
+    },
     401: { description: 'Unauthorized' },
     422: { description: 'Validation error' },
   },
@@ -77,7 +101,14 @@ registry.registerPath({
     },
   },
   responses: {
-    200: { description: 'Announcement updated successfully' },
+    200: {
+      description: 'Announcement updated successfully',
+      content: {
+        'application/json': {
+          schema: AnnouncementSchema,
+        },
+      },
+    },
     401: { description: 'Unauthorized' },
     403: { description: 'Access denied' },
     404: { description: 'Announcement not found' },

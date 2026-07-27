@@ -16,7 +16,6 @@ export const ANNOUNCEMENT_PATHS = {
   BY_ID: '/:id',
 } as const
 
-/** Full paths for OpenAPI (params use `{id}`, not Express `/:id`) */
 export const AUTH_OPENAPI_PATHS = {
   REGISTER: `${APP_PATHS.AUTH}${AUTH_PATHS.REGISTER}`,
   LOGIN: `${APP_PATHS.AUTH}${AUTH_PATHS.LOGIN}`,
