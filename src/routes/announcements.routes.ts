@@ -1,13 +1,13 @@
 import express from 'express'
 
 import * as announcementsController from '../controllers/announcements.controller.ts'
+import { ANNOUNCEMENT_PATHS } from '../constants/routes.ts'
 import { authenticate } from '../middlewares/authenticate.ts'
 import {
   validateBody,
   validateParams,
   validateQuery,
 } from '../middlewares/validate.ts'
-import { ANNOUNCEMENT_PATHS } from '../constants/routes.ts'
 import {
   AnnouncementParamsSchema,
   CreateAnnouncementSchema,
@@ -22,17 +22,20 @@ router.get(
   validateQuery(GetAnnouncementsQuerySchema),
   announcementsController.getAllAnnouncements,
 )
+
 router.get(
   ANNOUNCEMENT_PATHS.BY_ID,
   validateParams(AnnouncementParamsSchema),
   announcementsController.getAnnouncementById,
 )
+
 router.post(
   ANNOUNCEMENT_PATHS.ROOT,
   authenticate,
   validateBody(CreateAnnouncementSchema),
   announcementsController.createAnnouncement,
 )
+
 router.patch(
   ANNOUNCEMENT_PATHS.BY_ID,
   authenticate,
@@ -40,6 +43,7 @@ router.patch(
   validateBody(UpdateAnnouncementSchema),
   announcementsController.updateAnnouncement,
 )
+
 router.delete(
   ANNOUNCEMENT_PATHS.BY_ID,
   authenticate,

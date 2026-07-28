@@ -1,6 +1,11 @@
 import { AUTH_OPENAPI_PATHS } from '../../constants/routes.ts'
 import { registry } from '../openapi.ts'
 import {
+  AuthMeSchema,
+  AuthSessionSchema,
+  AuthTokensSchema,
+} from '../schemas/auth.schemas.ts'
+import {
   LoginSchema,
   RefreshSchema,
   RegisterSchema,
@@ -23,7 +28,14 @@ registry.registerPath({
     },
   },
   responses: {
-    201: { description: 'User registered successfully' },
+    201: {
+      description: 'User registered successfully',
+      content: {
+        'application/json': {
+          schema: AuthSessionSchema,
+        },
+      },
+    },
     409: { description: 'Username or email already taken' },
     422: { description: 'Validation error' },
   },
@@ -44,7 +56,14 @@ registry.registerPath({
     },
   },
   responses: {
-    200: { description: 'Login successful' },
+    200: {
+      description: 'Login successful',
+      content: {
+        'application/json': {
+          schema: AuthSessionSchema,
+        },
+      },
+    },
     401: { description: 'Invalid credentials' },
     422: { description: 'Validation error' },
   },
@@ -65,7 +84,14 @@ registry.registerPath({
     },
   },
   responses: {
-    200: { description: 'Tokens refreshed successfully' },
+    200: {
+      description: 'Tokens refreshed successfully',
+      content: {
+        'application/json': {
+          schema: AuthTokensSchema,
+        },
+      },
+    },
     401: { description: 'Invalid or missing refresh token' },
     422: { description: 'Validation error' },
   },
@@ -79,7 +105,7 @@ registry.registerPath({
   security: [{ bearerAuth: [] }],
   responses: {
     204: { description: 'Logged out successfully' },
-    401: { description: 'Unauthorized' },
+    401: { description: 'Authentication required' },
   },
 })
 
@@ -90,7 +116,14 @@ registry.registerPath({
   summary: 'Get current authenticated user',
   security: [{ bearerAuth: [] }],
   responses: {
-    200: { description: 'Current user profile' },
-    401: { description: 'Unauthorized' },
+    200: {
+      description: 'Current user profile',
+      content: {
+        'application/json': {
+          schema: AuthMeSchema,
+        },
+      },
+    },
+    401: { description: 'Authentication required' },
   },
 })

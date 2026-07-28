@@ -17,7 +17,7 @@ registry.registerComponent('securitySchemes', 'bearerAuth', {
   bearerFormat: 'JWT',
 })
 
-export function generateOpenApiDocument() {
+export const generateOpenApiDocument = () => {
   const generator = new OpenApiGeneratorV3(registry.definitions)
 
   return generator.generateDocument({
@@ -28,6 +28,6 @@ export function generateOpenApiDocument() {
       description:
         'REST API for an announcements board with JWT authentication',
     },
-    servers: [{ url: config.appUrl }],
+    servers: [{ url: config.APP_URL }],
   })
 }

@@ -23,8 +23,8 @@ app.use(APP_PATHS.ANNOUNCEMENTS, announcementsRoutes);
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-app.listen(config.port, () => {
+app.listen(config.PORT, () => {
   console.log(
-    `Server is running on port ${config.port}: ${config.appUrl}/api-docs`,
+    `Server is running on port ${config.PORT}: ${config.APP_URL}/api-docs`,
   );
 });

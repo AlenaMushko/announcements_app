@@ -79,7 +79,7 @@ registry.registerPath({
         },
       },
     },
-    401: { description: 'Unauthorized' },
+    401: { description: 'Authentication required' },
     422: { description: 'Validation error' },
   },
 })
@@ -109,7 +109,7 @@ registry.registerPath({
         },
       },
     },
-    401: { description: 'Unauthorized' },
+    401: { description: 'Authentication required' },
     403: { description: 'Access denied' },
     404: { description: 'Announcement not found' },
     422: { description: 'Validation error' },
@@ -127,7 +127,7 @@ registry.registerPath({
   },
   responses: {
     204: { description: 'Announcement deleted successfully' },
-    401: { description: 'Unauthorized' },
+    401: { description: 'Authentication required' },
     403: { description: 'Access denied' },
     404: { description: 'Announcement not found' },
   },
