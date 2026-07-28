@@ -51,7 +51,7 @@ export const GetAnnouncementsQuerySchema = registry.register(
       .openapi({
         description:
           'Case-insensitive substring search in announcement title. Empty or omitted returns all.',
-        example: 'ноутбук',
+        example: 'laptop',
       }),
     sort: z
       .enum(['newest', 'oldest'])

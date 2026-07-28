@@ -1,5 +1,6 @@
 import type { RequestHandler } from 'express'
 
+import { config } from '../config/config.ts'
 import { authService } from '../services/auth.services.ts'
 import {
   clearAuthCookies,
@@ -11,7 +12,6 @@ import type {
   RefreshBody,
   RegisterBody,
 } from '../validations/auth.validator.ts'
-import { config } from '../config/config.ts'
 
 export const register: RequestHandler = async (req, res, next) => {
   try {
@@ -48,9 +48,9 @@ export const login: RequestHandler = async (req, res, next) => {
 export const refresh: RequestHandler = async (req, res, next) => {
   try {
     const body = req.body as RefreshBody
-    const refreshTokenFromCookie = req.cookies?.[
-      config.REFRESH_TOKEN_COOKIE
-    ] as string | undefined
+    const refreshTokenFromCookie = req.cookies?.[config.REFRESH_TOKEN_COOKIE] as
+      | string
+      | undefined
 
     const refreshToken = body.refreshToken || refreshTokenFromCookie
 
