@@ -1,14 +1,17 @@
-import { ANNOUNCEMENT_OPENAPI_PATHS } from '../../constants/routes.ts'
-import { registry } from '../openapi.ts'
-import { AnnouncementsListResponseSchema, AnnouncementSchema } from '../schemas/announcements.schemas.ts'
+import { ANNOUNCEMENT_OPENAPI_PATHS } from '../../constants/routes.ts';
 import {
   AnnouncementParamsSchema,
   CreateAnnouncementSchema,
   GetAnnouncementsQuerySchema,
   UpdateAnnouncementSchema,
-} from '../../validations/announcements.validator.ts'
+} from '../../validations/announcements.validator.ts';
+import { registry } from '../openapi.ts';
+import {
+  AnnouncementSchema,
+  AnnouncementsListResponseSchema,
+} from '../schemas/announcements.schemas.ts';
 
-const ANNOUNCEMENTS_TAG = 'Announcements'
+const ANNOUNCEMENTS_TAG = 'Announcements';
 
 registry.registerPath({
   method: 'get',
@@ -31,7 +34,7 @@ registry.registerPath({
     },
     400: { description: 'Invalid query parameters' },
   },
-})
+});
 
 registry.registerPath({
   method: 'get',
@@ -53,7 +56,7 @@ registry.registerPath({
     400: { description: 'Invalid parameters' },
     404: { description: 'Announcement not found' },
   },
-})
+});
 
 registry.registerPath({
   method: 'post',
@@ -82,7 +85,7 @@ registry.registerPath({
     401: { description: 'Authentication required' },
     422: { description: 'Validation error' },
   },
-})
+});
 
 registry.registerPath({
   method: 'patch',
@@ -114,7 +117,7 @@ registry.registerPath({
     404: { description: 'Announcement not found' },
     422: { description: 'Validation error' },
   },
-})
+});
 
 registry.registerPath({
   method: 'delete',
@@ -131,4 +134,4 @@ registry.registerPath({
     403: { description: 'Access denied' },
     404: { description: 'Announcement not found' },
   },
-})
+});

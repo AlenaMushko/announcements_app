@@ -1,28 +1,27 @@
-import type { Prisma } from '../../prisma/generated/prisma/client.ts'
-
-import prisma from '../../db.ts'
-import { PUBLIC_USER_SELECT } from '../constants/userSelect.ts'
+import prisma from '../../db.ts';
+import type { Prisma } from '../../prisma/generated/prisma/client.ts';
+import { PUBLIC_USER_SELECT } from '../constants/userSelect.ts';
 import type {
   CreateAnnouncementBody,
   UpdateAnnouncementBody,
-} from '../validations/announcements.validator.ts'
+} from '../validations/announcements.validator.ts';
 
 const announcementWithAuthorInclude = {
   user: {
     select: PUBLIC_USER_SELECT,
   },
-} as const
+} as const;
 
 export type AnnouncementWithAuthor = Prisma.AnnouncementGetPayload<{
-  include: typeof announcementWithAuthorInclude
-}>
+  include: typeof announcementWithAuthorInclude;
+}>;
 
 export const announcementsRepository = {
   findMany: (args: {
-    where: Prisma.AnnouncementWhereInput
-    orderBy: Prisma.AnnouncementOrderByWithRelationInput
-    skip: number
-    take: number
+    where: Prisma.AnnouncementWhereInput;
+    orderBy: Prisma.AnnouncementOrderByWithRelationInput;
+    skip: number;
+    take: number;
   }) =>
     prisma.announcement.findMany({
       where: args.where,
@@ -32,8 +31,7 @@ export const announcementsRepository = {
       include: announcementWithAuthorInclude,
     }),
 
-  count: (where: Prisma.AnnouncementWhereInput) =>
-    prisma.announcement.count({ where }),
+  count: (where: Prisma.AnnouncementWhereInput) => prisma.announcement.count({ where }),
 
   findById: (id: number) =>
     prisma.announcement.findUnique({
@@ -61,4 +59,4 @@ export const announcementsRepository = {
     prisma.announcement.delete({
       where: { id },
     }),
-}
+};

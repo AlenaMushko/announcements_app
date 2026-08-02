@@ -1,6 +1,6 @@
-import { z } from 'zod'
+import { z } from 'zod';
 
-import { registry } from '../docs/openapi.ts'
+import { registry } from '../docs/openapi.ts';
 
 export const RegisterSchema = registry.register(
   'Register',
@@ -15,7 +15,7 @@ export const RegisterSchema = registry.register(
       .regex(/[0-9]/, 'Password must contain at least one digit'),
     name: z.string().min(2).max(30),
   }),
-)
+);
 
 export const LoginSchema = registry.register(
   'Login',
@@ -23,15 +23,15 @@ export const LoginSchema = registry.register(
     username: z.string().min(1),
     password: z.string().min(1),
   }),
-)
+);
 
 export const RefreshSchema = registry.register(
   'Refresh',
   z.object({
     refreshToken: z.string().min(1),
   }),
-)
+);
 
-export type RegisterBody = z.infer<typeof RegisterSchema>
-export type LoginBody = z.infer<typeof LoginSchema>
-export type RefreshBody = z.infer<typeof RefreshSchema>
+export type RegisterBody = z.infer<typeof RegisterSchema>;
+export type LoginBody = z.infer<typeof LoginSchema>;
+export type RefreshBody = z.infer<typeof RefreshSchema>;

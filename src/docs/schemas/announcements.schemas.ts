@@ -1,8 +1,8 @@
-import { z } from 'zod'
+import { z } from 'zod';
 
-import { ANNOUNCEMENTS_PER_PAGE } from '../../constants/pagination.ts'
-import { registry } from '../openapi.ts'
-import { AnnouncementCategorySchema } from '../../validations/announcements.validator.ts'
+import { ANNOUNCEMENTS_PER_PAGE } from '../../constants/pagination.ts';
+import { AnnouncementCategorySchema } from '../../validations/announcements.validator.ts';
+import { registry } from '../openapi.ts';
 
 export const AnnouncementAuthorSchema = registry.register(
   'AnnouncementAuthor',
@@ -12,7 +12,7 @@ export const AnnouncementAuthorSchema = registry.register(
     email: z.string().email(),
     name: z.string(),
   }),
-)
+);
 
 export const AnnouncementSchema = registry.register(
   'Announcement',
@@ -26,7 +26,7 @@ export const AnnouncementSchema = registry.register(
     updatedAt: z.string().datetime(),
     user: AnnouncementAuthorSchema,
   }),
-)
+);
 
 export const PaginationSchema = registry.register(
   'Pagination',
@@ -48,7 +48,7 @@ export const PaginationSchema = registry.register(
       example: ANNOUNCEMENTS_PER_PAGE,
     }),
   }),
-)
+);
 
 export const AnnouncementsListResponseSchema = registry.register(
   'AnnouncementsListResponse',
@@ -56,4 +56,4 @@ export const AnnouncementsListResponseSchema = registry.register(
     data: z.array(AnnouncementSchema),
     pagination: PaginationSchema,
   }),
-)
+);

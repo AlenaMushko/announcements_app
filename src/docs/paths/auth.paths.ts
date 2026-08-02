@@ -1,17 +1,9 @@
-import { AUTH_OPENAPI_PATHS } from '../../constants/routes.ts'
-import { registry } from '../openapi.ts'
-import {
-  AuthMeSchema,
-  AuthSessionSchema,
-  AuthTokensSchema,
-} from '../schemas/auth.schemas.ts'
-import {
-  LoginSchema,
-  RefreshSchema,
-  RegisterSchema,
-} from '../../validations/auth.validator.ts'
+import { AUTH_OPENAPI_PATHS } from '../../constants/routes.ts';
+import { LoginSchema, RefreshSchema, RegisterSchema } from '../../validations/auth.validator.ts';
+import { registry } from '../openapi.ts';
+import { AuthMeSchema, AuthSessionSchema, AuthTokensSchema } from '../schemas/auth.schemas.ts';
 
-const AUTH_TAG = 'Auth'
+const AUTH_TAG = 'Auth';
 
 registry.registerPath({
   method: 'post',
@@ -39,7 +31,7 @@ registry.registerPath({
     409: { description: 'Username or email already taken' },
     422: { description: 'Validation error' },
   },
-})
+});
 
 registry.registerPath({
   method: 'post',
@@ -67,7 +59,7 @@ registry.registerPath({
     401: { description: 'Invalid credentials' },
     422: { description: 'Validation error' },
   },
-})
+});
 
 registry.registerPath({
   method: 'post',
@@ -95,7 +87,7 @@ registry.registerPath({
     401: { description: 'Invalid or missing refresh token' },
     422: { description: 'Validation error' },
   },
-})
+});
 
 registry.registerPath({
   method: 'post',
@@ -107,7 +99,7 @@ registry.registerPath({
     204: { description: 'Logged out successfully' },
     401: { description: 'Authentication required' },
   },
-})
+});
 
 registry.registerPath({
   method: 'get',
@@ -126,4 +118,4 @@ registry.registerPath({
     },
     401: { description: 'Authentication required' },
   },
-})
+});

@@ -1,2 +1,2 @@
-import './auth.paths.ts'
-import './announcements.paths.ts'
+import './auth.paths.ts';
+import './announcements.paths.ts';

@@ -1,1 +1,1 @@
-export const ANNOUNCEMENTS_PER_PAGE = 10
+export const ANNOUNCEMENTS_PER_PAGE = 10;

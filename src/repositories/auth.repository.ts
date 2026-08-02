@@ -1,6 +1,6 @@
-import prisma from '../../db.ts'
-import { AUTH_ME_SELECT, PUBLIC_USER_SELECT } from '../constants/userSelect.ts'
-import type { RegisterBody } from '../validations/auth.validator.ts'
+import prisma from '../../db.ts';
+import { AUTH_ME_SELECT, PUBLIC_USER_SELECT } from '../constants/userSelect.ts';
+import type { RegisterBody } from '../validations/auth.validator.ts';
 
 export const authRepository = {
   createUser: async (data: RegisterBody & { password: string }) => {
@@ -12,16 +12,12 @@ export const authRepository = {
         name: data.name,
       },
       select: PUBLIC_USER_SELECT,
-    })
+    });
 
-    return user
+    return user;
   },
 
-  createRefreshToken: (data: {
-    userId: number
-    token: string
-    expiresAt: Date
-  }) =>
+  createRefreshToken: (data: { userId: number; token: string; expiresAt: Date }) =>
     prisma.refreshToken.create({
       data,
     }),
@@ -35,8 +31,8 @@ export const authRepository = {
     }),
 
   deleteRefreshTokensByUserId: (userId: number) =>
-      prisma.refreshToken.deleteMany({
-        where: { userId },
+    prisma.refreshToken.deleteMany({
+      where: { userId },
     }),
 
   findRefreshTokenByToken: (token: string) =>
@@ -59,5 +55,4 @@ export const authRepository = {
       where: { id },
       select: AUTH_ME_SELECT,
     }),
-  }
-
+};

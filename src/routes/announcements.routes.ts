@@ -1,40 +1,36 @@
-import express from 'express'
+import express from 'express';
 
-import * as announcementsController from '../controllers/announcements.controller.ts'
-import { ANNOUNCEMENT_PATHS } from '../constants/routes.ts'
-import { authenticate } from '../middlewares/authenticate.ts'
-import {
-  validateBody,
-  validateParams,
-  validateQuery,
-} from '../middlewares/validate.ts'
+import { ANNOUNCEMENT_PATHS } from '../constants/routes.ts';
+import * as announcementsController from '../controllers/announcements.controller.ts';
+import { authenticate } from '../middlewares/authenticate.ts';
+import { validateBody, validateParams, validateQuery } from '../middlewares/validate.ts';
 import {
   AnnouncementParamsSchema,
   CreateAnnouncementSchema,
   GetAnnouncementsQuerySchema,
   UpdateAnnouncementSchema,
-} from '../validations/announcements.validator.ts'
+} from '../validations/announcements.validator.ts';
 
-const router = express.Router()
+const router = express.Router();
 
 router.get(
   ANNOUNCEMENT_PATHS.ROOT,
   validateQuery(GetAnnouncementsQuerySchema),
   announcementsController.getAllAnnouncements,
-)
+);
 
 router.get(
   ANNOUNCEMENT_PATHS.BY_ID,
   validateParams(AnnouncementParamsSchema),
   announcementsController.getAnnouncementById,
-)
+);
 
 router.post(
   ANNOUNCEMENT_PATHS.ROOT,
   authenticate,
   validateBody(CreateAnnouncementSchema),
   announcementsController.createAnnouncement,
-)
+);
 
 router.patch(
   ANNOUNCEMENT_PATHS.BY_ID,
@@ -42,13 +38,13 @@ router.patch(
   validateParams(AnnouncementParamsSchema),
   validateBody(UpdateAnnouncementSchema),
   announcementsController.updateAnnouncement,
-)
+);
 
 router.delete(
   ANNOUNCEMENT_PATHS.BY_ID,
   authenticate,
   validateParams(AnnouncementParamsSchema),
   announcementsController.deleteAnnouncement,
-)
+);
 
-export default router
+export default router;

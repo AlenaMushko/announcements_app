@@ -1,6 +1,6 @@
-import { z } from 'zod'
+import { z } from 'zod';
 
-import { registry } from '../openapi.ts'
+import { registry } from '../openapi.ts';
 
 export const AuthUserSchema = registry.register(
   'AuthUser',
@@ -10,14 +10,14 @@ export const AuthUserSchema = registry.register(
     email: z.string().email(),
     name: z.string(),
   }),
-)
+);
 
 export const AuthMeSchema = registry.register(
   'AuthMe',
   AuthUserSchema.extend({
     createdAt: z.string().datetime(),
   }),
-)
+);
 
 export const AuthTokensSchema = registry.register(
   'AuthTokens',
@@ -25,7 +25,7 @@ export const AuthTokensSchema = registry.register(
     accessToken: z.string(),
     refreshToken: z.string(),
   }),
-)
+);
 
 export const AuthSessionSchema = registry.register(
   'AuthSession',
@@ -34,4 +34,4 @@ export const AuthSessionSchema = registry.register(
     accessToken: z.string(),
     refreshToken: z.string(),
   }),
-)
+);
