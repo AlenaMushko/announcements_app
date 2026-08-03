@@ -3,10 +3,13 @@ import express from 'express';
 import { AUTH_PATHS } from '../constants/routes.ts';
 import * as authController from '../controllers/auth.controller.ts';
 import { authenticate } from '../middlewares/authenticate.ts';
+import { authRateLimiter } from '../middlewares/authRateLimiter.ts';
 import { validateBody } from '../middlewares/validate.ts';
 import { LoginSchema, RefreshSchema, RegisterSchema } from '../validations/auth.validator.ts';
 
 const router = express.Router();
+
+router.use(authRateLimiter);
 
 router.post(AUTH_PATHS.REGISTER, validateBody(RegisterSchema), authController.register);
 router.post(AUTH_PATHS.LOGIN, validateBody(LoginSchema), authController.login);

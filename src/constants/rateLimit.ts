@@ -1,0 +1,3 @@
+export const AUTH_RATE_LIMIT = 10;
+export const AUTH_RATE_WINDOW_MINUTES = 15;
+export const AUTH_RATE_WINDOW_MS = AUTH_RATE_WINDOW_MINUTES * 60 * 1000;

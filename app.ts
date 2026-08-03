@@ -1,6 +1,7 @@
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
+import helmet from 'helmet';
 
 import { config } from './src/config/index.ts';
 import { APP_PATHS } from './src/constants/routes.ts';
@@ -26,6 +27,12 @@ app.use(
     allowedHeaders: ['Content-Type', 'Authorization'],
     exposedHeaders: ['X-Total-Count'],
     maxAge: 86400,
+  }),
+);
+
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
   }),
 );
 
