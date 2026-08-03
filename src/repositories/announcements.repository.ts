@@ -6,6 +6,14 @@ import type {
   UpdateAnnouncementBody,
 } from '../validations/announcements.validator.ts';
 
+type AnnouncementWriteData = CreateAnnouncementBody & {
+  imageUrl?: string;
+};
+
+type AnnouncementUpdateData = UpdateAnnouncementBody & {
+  imageUrl?: string;
+};
+
 const announcementWithAuthorInclude = {
   user: {
     select: PUBLIC_USER_SELECT,
@@ -39,7 +47,7 @@ export const announcementsRepository = {
       include: announcementWithAuthorInclude,
     }),
 
-  create: (userId: number, data: CreateAnnouncementBody) =>
+  create: (userId: number, data: AnnouncementWriteData) =>
     prisma.announcement.create({
       data: {
         ...data,
@@ -48,7 +56,7 @@ export const announcementsRepository = {
       include: announcementWithAuthorInclude,
     }),
 
-  update: (id: number, data: UpdateAnnouncementBody) =>
+  update: (id: number, data: AnnouncementUpdateData) =>
     prisma.announcement.update({
       where: { id },
       data,

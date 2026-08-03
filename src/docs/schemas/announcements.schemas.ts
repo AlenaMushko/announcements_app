@@ -22,6 +22,7 @@ export const AnnouncementSchema = registry.register(
     description: z.string(),
     price: z.number().int(),
     category: AnnouncementCategorySchema,
+    imageUrl: z.string().url().nullable().optional(),
     createdAt: z.string().datetime(),
     updatedAt: z.string().datetime(),
     user: AnnouncementAuthorSchema,

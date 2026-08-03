@@ -1,11 +1,15 @@
 import type { RequestHandler } from 'express';
 import { z } from 'zod';
 
+import { removeUploadedFile } from '../utils/removeUploadedFile.ts';
+
 export const validateBody = <T extends z.ZodTypeAny>(schema: T) =>
   ((req, res, next) => {
     const result = schema.safeParse(req.body);
 
     if (!result.success) {
+      void removeUploadedFile(req);
+
       const flattened = z.flattenError(result.error);
 
       return res.status(422).json({

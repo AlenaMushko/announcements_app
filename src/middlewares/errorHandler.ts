@@ -1,16 +1,27 @@
 import type { NextFunction, Request, Response } from 'express';
+import multer from 'multer';
 
 import logger from '../logger.ts';
+import { removeUploadedFile } from '../utils/removeUploadedFile.ts';
 
 export const notFoundHandler = (_req: Request, res: Response) => {
   res.status(404).json({ error: 'Not found' });
 };
 
-export const errorHandler = (err: unknown, _req: Request, res: Response, _next: NextFunction) => {
+export const errorHandler = (err: unknown, req: Request, res: Response, _next: NextFunction) => {
+  void removeUploadedFile(req);
   logger.error({ err }, 'Request failed');
 
   if (err instanceof Error && err.message === 'Not allowed by CORS') {
     return res.status(403).json({ error: 'Not allowed by CORS' });
+  }
+
+  if (err instanceof multer.MulterError) {
+    return res.status(400).json({ error: err.message });
+  }
+
+  if (err instanceof Error && err.message === 'Only image files are allowed') {
+    return res.status(400).json({ error: err.message });
   }
 
   if (

@@ -1,4 +1,7 @@
+import { z } from 'zod';
+
 import { ANNOUNCEMENT_OPENAPI_PATHS } from '../../constants/routes.ts';
+import { UPLOAD_FIELD_NAME } from '../../constants/upload.ts';
 import {
   AnnouncementParamsSchema,
   CreateAnnouncementSchema,
@@ -12,6 +15,28 @@ import {
 } from '../schemas/announcements.schemas.ts';
 
 const ANNOUNCEMENTS_TAG = 'Announcements';
+
+const CreateAnnouncementMultipartSchema = registry.register(
+  'CreateAnnouncementMultipart',
+  CreateAnnouncementSchema.extend({
+    [UPLOAD_FIELD_NAME]: z.string().optional().openapi({
+      type: 'string',
+      format: 'binary',
+      description: 'Optional announcement image',
+    }),
+  }),
+);
+
+const UpdateAnnouncementMultipartSchema = registry.register(
+  'UpdateAnnouncementMultipart',
+  UpdateAnnouncementSchema.extend({
+    [UPLOAD_FIELD_NAME]: z.string().optional().openapi({
+      type: 'string',
+      format: 'binary',
+      description: 'Optional announcement image',
+    }),
+  }),
+);
 
 registry.registerPath({
   method: 'get',
@@ -63,12 +88,13 @@ registry.registerPath({
   path: ANNOUNCEMENT_OPENAPI_PATHS.ROOT,
   tags: [ANNOUNCEMENTS_TAG],
   summary: 'Create a new announcement',
+  description: 'Accepts multipart/form-data. Image field is optional.',
   security: [{ bearerAuth: [] }],
   request: {
     body: {
       content: {
-        'application/json': {
-          schema: CreateAnnouncementSchema,
+        'multipart/form-data': {
+          schema: CreateAnnouncementMultipartSchema,
         },
       },
     },
@@ -92,13 +118,14 @@ registry.registerPath({
   path: ANNOUNCEMENT_OPENAPI_PATHS.BY_ID,
   tags: [ANNOUNCEMENTS_TAG],
   summary: 'Partially update an announcement',
+  description: 'Accepts multipart/form-data. Image field is optional.',
   security: [{ bearerAuth: [] }],
   request: {
     params: AnnouncementParamsSchema,
     body: {
       content: {
-        'application/json': {
-          schema: UpdateAnnouncementSchema,
+        'multipart/form-data': {
+          schema: UpdateAnnouncementMultipartSchema,
         },
       },
     },

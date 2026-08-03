@@ -19,16 +19,15 @@ export const CreateAnnouncementSchema = registry.register(
   z.object({
     title: z.string().min(5).max(50),
     description: z.string().min(10).max(1000),
-    price: z.number().int().positive(),
+    price: z.coerce.number().int().positive(),
+    imageUrl: z.string().url().optional(),
     category: AnnouncementCategorySchema,
   }),
 );
 
 export const UpdateAnnouncementSchema = registry.register(
   'UpdateAnnouncement',
-  CreateAnnouncementSchema.partial().refine((data) => Object.keys(data).length > 0, {
-    error: 'At least one field must be provided',
-  }),
+  CreateAnnouncementSchema.partial(),
 );
 
 export const GetAnnouncementsQuerySchema = registry.register(

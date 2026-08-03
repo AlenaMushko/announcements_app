@@ -8,6 +8,7 @@ import type {
   GetAnnouncementsQuery,
   UpdateAnnouncementBody,
 } from '../validations/announcements.validator.ts';
+import { uploadAnnouncementImage } from './cloudinary.service.ts';
 
 const buildAnnouncementsWhere = (query: GetAnnouncementsQuery): Prisma.AnnouncementWhereInput => {
   const where: Prisma.AnnouncementWhereInput = {};
@@ -83,12 +84,37 @@ export const announcementsService = {
     return announcement;
   },
 
-  createAnnouncement: async (userId: number, data: CreateAnnouncementBody) =>
-    await announcementsRepository.create(userId, data),
+  createAnnouncement: async (
+    userId: number,
+    data: CreateAnnouncementBody,
+    imageFile?: Express.Multer.File,
+  ) => {
+    const imageUrl = imageFile ? await uploadAnnouncementImage(imageFile) : undefined;
 
-  updateAnnouncement: async (id: number, userId: number, data: UpdateAnnouncementBody) => {
+    return await announcementsRepository.create(userId, {
+      ...data,
+      imageUrl,
+    });
+  },
+
+  updateAnnouncement: async (
+    id: number,
+    userId: number,
+    data: UpdateAnnouncementBody,
+    imageFile?: Express.Multer.File,
+  ) => {
     await assertAnnouncementOwnership(id, userId);
-    return await announcementsRepository.update(id, data);
+
+    if (!imageFile && Object.keys(data).length === 0) {
+      throw createHttpError(422, 'At least one field must be provided');
+    }
+
+    const imageUrl = imageFile ? await uploadAnnouncementImage(imageFile) : undefined;
+
+    return await announcementsRepository.update(id, {
+      ...data,
+      ...(imageUrl ? { imageUrl } : {}),
+    });
   },
 
   deleteAnnouncement: async (id: number, userId: number) => {
