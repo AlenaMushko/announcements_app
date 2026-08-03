@@ -23,6 +23,15 @@ const getJwtSecret = (): string => {
 
 const port = Number(process.env.PORT ?? 3000);
 
+const getAllowedOrigins = (): string[] => {
+  const raw = process.env.ALLOWED_ORIGINS ?? 'http://localhost:5173';
+
+  return raw
+    .split(',')
+    .map((origin) => origin.trim().replace(/^<|>$/g, ''))
+    .filter(Boolean);
+};
+
 export const config = {
   PORT: port,
   NODE_ENV: process.env.NODE_ENV ?? 'development',
@@ -34,4 +43,8 @@ export const config = {
   REFRESH_TOKEN_LIFETIME: Number(process.env.REFRESH_TOKEN_LIFETIME ?? 7 * 24 * 60 * 60 * 1000),
   ACCESS_TOKEN_COOKIE: process.env.ACCESS_TOKEN_COOKIE ?? 'accessToken',
   REFRESH_TOKEN_COOKIE: process.env.REFRESH_TOKEN_COOKIE ?? 'refreshToken',
+  ALLOWED_ORIGINS: getAllowedOrigins(),
+  CLOUDINARY_CLOUD_NAME: getRequiredEnv('CLOUDINARY_CLOUD_NAME'),
+  CLOUDINARY_API_KEY: getRequiredEnv('CLOUDINARY_API_KEY'),
+  CLOUDINARY_API_SECRET: getRequiredEnv('CLOUDINARY_API_SECRET'),
 } as const;

@@ -7,6 +7,10 @@ export const notFoundHandler = (_req: Request, res: Response) => {
 export const errorHandler = (err: unknown, _req: Request, res: Response, _next: NextFunction) => {
   console.error(err);
 
+  if (err instanceof Error && err.message === 'Not allowed by CORS') {
+    return res.status(403).json({ error: 'Not allowed by CORS' });
+  }
+
   if (
     typeof err === 'object' &&
     err !== null &&

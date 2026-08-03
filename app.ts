@@ -1,4 +1,5 @@
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import express from 'express';
 
 import { config } from './src/config/index.ts';
@@ -9,6 +10,24 @@ import announcementsRoutes from './src/routes/announcements.routes.ts';
 import authRoutes from './src/routes/auth.routes.ts';
 
 const app = express();
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || config.ALLOWED_ORIGINS.includes(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error('Not allowed by CORS'));
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['X-Total-Count'],
+    maxAge: 86400,
+  }),
+);
 
 app.use(express.json());
 app.use(cookieParser());
