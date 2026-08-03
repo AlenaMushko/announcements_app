@@ -1,11 +1,13 @@
 import type { NextFunction, Request, Response } from 'express';
 
+import logger from '../logger.ts';
+
 export const notFoundHandler = (_req: Request, res: Response) => {
   res.status(404).json({ error: 'Not found' });
 };
 
 export const errorHandler = (err: unknown, _req: Request, res: Response, _next: NextFunction) => {
-  console.error(err);
+  logger.error({ err }, 'Request failed');
 
   if (err instanceof Error && err.message === 'Not allowed by CORS') {
     return res.status(403).json({ error: 'Not allowed by CORS' });

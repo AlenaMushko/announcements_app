@@ -1,6 +1,7 @@
 import type { RequestHandler } from 'express';
 
 import { config } from '../config/config.ts';
+import logger from '../logger.ts';
 import { authService } from '../services/auth.services.ts';
 import { clearAuthCookies, setAuthCookies } from '../services/token.service.ts';
 import { getAuthenticatedUserId } from '../utils/auth.ts';
@@ -15,6 +16,11 @@ export const register: RequestHandler = async (req, res, next) => {
       accessToken: result.accessToken,
       refreshToken: result.refreshToken,
     });
+
+    logger.info(
+      { userId: result.user.id, username: result.user.username, email: result.user.email },
+      'User registered',
+    );
 
     res.status(201).json(result);
   } catch (error) {
@@ -31,6 +37,8 @@ export const login: RequestHandler = async (req, res, next) => {
       accessToken: result.accessToken,
       refreshToken: result.refreshToken,
     });
+
+    logger.info({ userId: result.user.id, username: result.user.username }, 'User logged in');
 
     res.status(200).json(result);
   } catch (error) {

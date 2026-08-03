@@ -2,10 +2,12 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
+import { pinoHttp } from 'pino-http';
 
 import { config } from './src/config/index.ts';
 import { APP_PATHS } from './src/constants/routes.ts';
 import { setupSwagger } from './src/docs/index.ts';
+import logger from './src/logger.ts';
 import { errorHandler, notFoundHandler } from './src/middlewares/errorHandler.ts';
 import announcementsRoutes from './src/routes/announcements.routes.ts';
 import authRoutes from './src/routes/auth.routes.ts';
@@ -36,6 +38,8 @@ app.use(
   }),
 );
 
+app.use(pinoHttp({ logger }));
+
 app.use(express.json());
 app.use(cookieParser());
 setupSwagger(app);
@@ -47,5 +51,5 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 app.listen(config.PORT, () => {
-  console.log(`Server is running on port ${config.PORT}: ${config.APP_URL}/api-docs`);
+  logger.info({ port: config.PORT, docs: `${config.APP_URL}/api-docs` }, 'Server started');
 });
