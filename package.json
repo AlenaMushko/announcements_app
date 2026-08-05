@@ -14,7 +14,8 @@
     "docker:up": "docker compose up -d postgres",
     "docker:up:app": "docker compose up --build app",
     "docker:down": "docker compose down",
-    "docker:logs": "docker compose logs -f"
+    "docker:logs": "docker compose logs -f",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
@@ -64,6 +65,7 @@
     "prettier": "^3.9.6",
     "prisma": "^7.6.0",
     "tsx": "^4.21.0",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.10"
   }
 }
