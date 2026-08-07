@@ -7,11 +7,11 @@ import type {
 } from '../validations/announcements.validator.ts';
 
 type AnnouncementWriteData = CreateAnnouncementBody & {
-  imageUrl?: string;
+  imageUrl?: string | null;
 };
 
 type AnnouncementUpdateData = UpdateAnnouncementBody & {
-  imageUrl?: string;
+  imageUrl?: string | null;
 };
 
 const announcementWithAuthorInclude = {

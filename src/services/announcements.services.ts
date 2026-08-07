@@ -89,7 +89,7 @@ export const announcementsService = {
     data: CreateAnnouncementBody,
     imageFile?: Express.Multer.File,
   ) => {
-    const imageUrl = imageFile ? await uploadAnnouncementImage(imageFile) : undefined;
+    const imageUrl = imageFile ? await uploadAnnouncementImage(imageFile) : null;
 
     return await announcementsRepository.create(userId, {
       ...data,
@@ -113,7 +113,7 @@ export const announcementsService = {
 
     return await announcementsRepository.update(id, {
       ...data,
-      ...(imageUrl ? { imageUrl } : {}),
+      ...(imageUrl !== undefined ? { imageUrl } : {}),
     });
   },
 

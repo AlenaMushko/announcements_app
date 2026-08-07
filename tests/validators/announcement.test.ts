@@ -11,7 +11,6 @@ const validAnnouncement = {
   title: 'Test Announcement',
   description: 'Test Description long enough',
   price: 100,
-  imageUrl: 'https://example.com/image.jpg',
   category: 'sale' as const,
 };
 
@@ -51,11 +50,16 @@ describe('CreateAnnouncementSchema', () => {
     }
   });
 
-  it('accepts announcement without optional imageUrl', () => {
-    const { imageUrl: _imageUrl, ...withoutImage } = validAnnouncement;
-    const result = CreateAnnouncementSchema.safeParse(withoutImage);
+  it('ignores client-provided imageUrl (set only via file upload)', () => {
+    const result = CreateAnnouncementSchema.safeParse({
+      ...validAnnouncement,
+      imageUrl: 'https://example.com/image.jpg',
+    });
 
     expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data).not.toHaveProperty('imageUrl');
+    }
   });
 
   it('rejects a title that is too short', () => {
@@ -80,15 +84,6 @@ describe('CreateAnnouncementSchema', () => {
     const result = CreateAnnouncementSchema.safeParse({
       ...validAnnouncement,
       category: 'food',
-    });
-
-    expect(result.success).toBe(false);
-  });
-
-  it('rejects an invalid imageUrl', () => {
-    const result = CreateAnnouncementSchema.safeParse({
-      ...validAnnouncement,
-      imageUrl: 'not-a-url',
     });
 
     expect(result.success).toBe(false);
@@ -123,6 +118,17 @@ describe('UpdateAnnouncementSchema', () => {
     expect(result.success).toBe(true);
     if (result.success) {
       expect(result.data).toEqual({ title: 'Updated title' });
+    }
+  });
+
+  it('ignores client-provided imageUrl on update', () => {
+    const result = UpdateAnnouncementSchema.safeParse({
+      imageUrl: 'https://example.com/image.jpg',
+    });
+
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data).not.toHaveProperty('imageUrl');
     }
   });
 
