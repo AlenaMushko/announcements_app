@@ -50,6 +50,4 @@ app.use(APP_PATHS.ANNOUNCEMENTS, announcementsRoutes);
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-app.listen(config.PORT, () => {
-  logger.info({ port: config.PORT, docs: `${config.APP_URL}/api-docs` }, 'Server started');
-});
+export default app;

@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "tsx app.ts",
-    "dev": "tsx --watch app.ts",
+    "start": "tsx index.ts",
+    "dev": "tsx --watch index.ts",
     "lint": "eslint \"**/*.ts\"",
     "lint:fix": "eslint \"**/*.ts\" --fix",
     "format": "prettier --write \"**/*.{ts,json}\"",
@@ -15,7 +15,9 @@
     "docker:up:app": "docker compose up --build app",
     "docker:down": "docker compose down",
     "docker:logs": "docker compose logs -f",
-    "test": "vitest"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "db:migrate:test": "tsx scripts/migrate-test.ts"
   },
   "keywords": [],
   "author": "",
@@ -54,6 +56,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/multer": "^2.2.0",
     "@types/node": "^25.5.2",
+    "@types/supertest": "^7.2.1",
     "@types/swagger-ui-express": "^4.1.8",
     "@typescript-eslint/eslint-plugin": "^8.65.0",
     "@typescript-eslint/parser": "^8.65.0",
@@ -64,6 +67,7 @@
     "eslint-plugin-simple-import-sort": "^14.0.0",
     "prettier": "^3.9.6",
     "prisma": "^7.6.0",
+    "supertest": "^7.2.2",
     "tsx": "^4.21.0",
     "typescript": "^6.0.2",
     "vitest": "^4.1.10"
