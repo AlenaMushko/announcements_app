@@ -1,10 +1,10 @@
 import { afterAll, beforeEach } from 'vitest';
 
 import prisma from '../db.ts';
-import { cleanDatabase } from './helpers/client.ts';
+import { cleanAnnouncementsData, cleanDatabase } from './helpers/client.ts';
 
 beforeEach(async () => {
-  await cleanDatabase();
+  await cleanAnnouncementsData();
 });
 
 afterAll(async () => {

@@ -44,7 +44,6 @@ export const errorHandler = (err: unknown, req: Request, res: Response, _next: N
     'status' in err &&
     typeof err.status === 'number' &&
     err.status >= 400 &&
-    err.status < 500 &&
     'message' in err &&
     typeof err.message === 'string'
   ) {
